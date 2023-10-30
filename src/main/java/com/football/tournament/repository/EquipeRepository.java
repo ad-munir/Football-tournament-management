@@ -10,5 +10,4 @@ import java.util.List;
 public interface EquipeRepository extends JpaRepository<Equipe,Long> {
 
     List<Equipe> findAllByPays(String pays);
-
 }

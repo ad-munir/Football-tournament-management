@@ -60,15 +60,16 @@ public class JoueurController {
         }
     }
 
+    //todo: handle errors + not tested Q7
     @GetMapping("/joueurs/equipe/{nomEquipe}")
     public List<Joueur> findAllJoueurByNomEquipe(@PathVariable String nomEquipe) {
         return joueurRepo.findAllByEquipe_NomEquipe(nomEquipe);
     }
 
+    //todo: handle errors Q9
     @GetMapping("/joueurs/{poste}/{nomEquipe}")
-    public List<Joueur> findAllJoueurByNomEquipe(@PathVariable String poste, @PathVariable String nomEquipe) {
+    public List<Joueur> findAllJoueurByPosteAndNomEquipe(@PathVariable String poste, @PathVariable String nomEquipe) {
         return joueurRepo.findAllByPosteAndEquipe_NomEquipe(poste, nomEquipe);
     }
-
 
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,10 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long idMatch;
+
+    @Temporal(TemporalType.DATE)
     Date dateMatch;
-    String heureMatch;
+    Time heureMatch;
 
     @ManyToOne
     Arbitre arbitre;

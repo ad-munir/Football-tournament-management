@@ -55,6 +55,6 @@ public class EquipeController {
         return equipeRepo.findAllByPays(pays);
     }
 
-    //todo: get equipes by match id
+    // todo: get equipes by match id
 
 }
