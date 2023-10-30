@@ -13,9 +13,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class MatchController {
@@ -102,15 +106,18 @@ public class MatchController {
         throw new NotFoundException("Match Introuvable");
     }
 
-    //todo: test Q10
 
     @DeleteMapping("/matches/played")
-    public ResponseEntity<String> deleteMatchesByDate(){
-        int deletedCount = matchRepo.deleteFinishedMatches();
-        return ResponseEntity.ok(deletedCount + " matches has been deleted!");
+    public ResponseEntity<String> deletePlayedMatches() {
+        Date currentDate = new Date();
+        Time currentTime = new Time(currentDate.getTime());
+
+        List<Match> playedMatches = matchRepo.findByDateMatchLessThanAndHeureMatchLessThan(currentDate,currentTime);
+
+        playedMatches.forEach( match -> matchRepo.delete(match));
+        return ResponseEntity.ok(playedMatches.size() + " matches has been deleted!");
 
     }
-
     @DeleteMapping("/matches/all")
     public void deleteAllMatchs() {
         matchRepo.deleteAll();
