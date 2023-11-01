@@ -22,6 +22,7 @@ public interface MatchRepository extends JpaRepository<Match,Long> {
 
     int deleteByDateMatchBeforeAndHeureMatchBefore(Date dateMatch, Time heureMatch);
 
-    List<Match> findByDateMatchLessThanAndHeureMatchLessThan(Date dateMatch, Time heureMatch);
+//    List<Match> findByDateMatchLessThanOrDateMatchEqualsAndHeureMatchLessThan(Date dateMatch, Time heureMatch);
 
+    List<Match> findByDateMatchBefore(Date date);
 }
