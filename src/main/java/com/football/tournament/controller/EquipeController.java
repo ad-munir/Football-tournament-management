@@ -28,26 +28,23 @@ public class EquipeController {
     @PutMapping("/equipes/{id}")
     public Equipe updateEquipe(@RequestBody Equipe Equipe, @PathVariable Long id) {
 
-        Optional<Equipe> optionalEquipe = equipeRepo.findById(id);
-        if(optionalEquipe.isPresent()) {
-            Equipe oldEquipe = optionalEquipe.get();
-            oldEquipe.setNomEquipe(Equipe.getNomEquipe());
-            oldEquipe.setPays(Equipe.getPays());
-            return equipeRepo.save(oldEquipe);
-        }
+        Equipe oldEquipe = equipeRepo.findById(id)
+                .orElseThrow( () -> new NotFoundException("Equipe Introuvable"));
 
-        throw new NotFoundException("Equipe Introuvable");
+
+        oldEquipe.setNomEquipe(Equipe.getNomEquipe());
+        oldEquipe.setPays(Equipe.getPays());
+
+        return equipeRepo.save(oldEquipe);
     }
 
     @DeleteMapping("/equipes/{id}")
     public void deleteEquipe(@PathVariable Long id) {
 
-        Optional<Equipe> optionalEquipe = equipeRepo.findById(id);
-        if(optionalEquipe.isPresent()) {
-            equipeRepo.deleteById(id);
-        }else {
-            throw new NotFoundException("Equipe Introuvable");
-        }
+        Equipe equipe = equipeRepo.findById(id)
+                .orElseThrow( ()-> new NotFoundException("Equipe Introuvable"));
+
+        equipeRepo.deleteById(id);
     }
 
     @GetMapping("/equipes/pays/{pays}")

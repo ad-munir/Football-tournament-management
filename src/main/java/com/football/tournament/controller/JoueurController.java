@@ -35,18 +35,21 @@ public class JoueurController {
         return joueurRepo.save(joueur);
     }
 
-    @PutMapping("/joueurs/{id}")
-    public Joueur updateJoueur(@RequestBody Joueur joueur, @PathVariable Long id) {
 
-        Optional<Joueur> optionalJoueur = joueurRepo.findById(id);
-        if(optionalJoueur.isPresent()) {
-            Joueur oldJoueur = optionalJoueur.get();
-            oldJoueur.setNomJoueur(joueur.getNomJoueur());
-            oldJoueur.setPoste(joueur.getPoste());
-            return joueurRepo.save(oldJoueur);
-        }
+    @PutMapping("/joueurs/{idJoueur}/equipe/{idEquipe}")
+    public Joueur updateJoueur(@RequestBody Joueur joueur, @PathVariable Long idJoueur, @PathVariable Long idEquipe) {
 
-        throw new  NotFoundException("Joueur Introuvable");
+        Equipe equipe = equipeRepo.findById(idEquipe)
+                .orElseThrow(() ->new NotFoundException("Equipe Introuvable"));
+
+        Joueur oldJoueur = joueurRepo.findById(idJoueur)
+                .orElseThrow(() -> new NotFoundException("Joueur Introuvable"));
+
+        oldJoueur.setNomJoueur(joueur.getNomJoueur());
+        oldJoueur.setPoste(joueur.getPoste());
+        oldJoueur.setEquipe(equipe);
+
+        return joueurRepo.save(oldJoueur);
     }
 
     @DeleteMapping("/joueurs/{id}")
@@ -60,7 +63,7 @@ public class JoueurController {
         }
     }
 
-    //todo: handle errors + not tested Q7
+    //todo: handle data types errors
     @GetMapping("/joueurs/equipe/{nomEquipe}")
     public List<Joueur> findAllJoueurByNomEquipe(@PathVariable String nomEquipe) {
         return joueurRepo.findAllByEquipe_NomEquipe(nomEquipe);

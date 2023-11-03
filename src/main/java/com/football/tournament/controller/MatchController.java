@@ -112,9 +112,6 @@ public class MatchController {
         Date currentDate = new Date();
         Time currentTime = new Time(currentDate.getTime());
 
-//        List<Match> playedMatches = matchRepo.findByDateMatchLessThanOrDateMatchEqualsAndHeureMatchLessThan(currentDate,currentTime);
-
-
 
         List<Match> playedMatches = matchRepo.findByDateMatchBefore(currentDate);
         int deletedMatches = 0;
@@ -130,8 +127,6 @@ public class MatchController {
             }
         }
 
-
-//        playedMatches.forEach( match -> matchRepo.delete(match));
         return ResponseEntity.ok(deletedMatches + " matches has been deleted!");
 
     }
