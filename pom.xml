@@ -63,6 +63,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>master</finalName>
     </build>
 
 </project>
